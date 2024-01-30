@@ -6,7 +6,7 @@ import {getAllCards, getCardById} from "./get-cards.route";
 
 const bodyParser = require('body-parser');
 
-const app: Application = express.default();
+const app: Application = express();
 
 const cors = require('cors');
 
