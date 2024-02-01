@@ -1,13 +1,18 @@
 import {BrowserModule} from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
-import { EntityDataModule } from '@ngrx/data';
+import { EntityDataModule, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
 import { NgModule } from '@angular/core';
 import { GalleryComponent } from './gallery.component';
+import { CardEntityService } from './services/card-entity.service';
+import { CardsResolver } from './services/cards-resolver';
 
 const routes: Routes = [
     {
         path: '',
-        component: GalleryComponent
+        component: GalleryComponent,
+        resolve: {
+            Cards: CardsResolver
+        }
         //canActivate: [AuthGuard]
     },
     {
@@ -16,15 +21,19 @@ const routes: Routes = [
     }
 ];
 
+const entityMetadata: EntityMetadataMap = {
+    Card: {
+
+    }
+};
+
 @NgModule({
     declarations: [
         GalleryComponent
     ],
     imports: [
-        BrowserModule,
         //BrowserAnimationsModule,
-        RouterModule.forRoot(routes, {}),
-        EntityDataModule.forRoot({}),
+        //EntityDataModule.forRoot({}),
         //HttpClientModule,
         //MatMenuModule,
         //MatIconModule,
@@ -52,8 +61,16 @@ const routes: Routes = [
         })
         */
     ],
+    providers: [
+        CardEntityService,
+        CardsResolver
+    ],
     bootstrap: [GalleryComponent]
 })
 
 export class GalleryModule {
+
+    constructor(private _eds: EntityDefinitionService) {
+        _eds.registerMetadataMap(entityMetadata)
+    }
 }
