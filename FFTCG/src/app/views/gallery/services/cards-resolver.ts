@@ -12,17 +12,9 @@ export class CardsResolver implements Resolve<boolean>{
     }
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         console.log("hello");
-        this._cardsService.getAll()
-            .pipe(
-                map(cards => {
-                    console.log(cards);
-                }),
-
-        );
         return this._cardsService.getAll()
         .pipe(
             map(cards => !!cards)
         );
-     
     }
 }
